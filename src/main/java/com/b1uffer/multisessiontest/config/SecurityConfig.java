@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     // 동시 세션 제어 핵심
     @Bean
+    @Order(1)
     public SecurityFilterChain sessionFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
@@ -37,21 +38,21 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    @Order(1)
-//    public SecurityFilterChain h2FilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .securityMatcher(PathRequest.toH2Console())
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .csrf(csrf -> csrf.disable())
-//                .headers(headers -> headers
-//                        .frameOptions(frame -> frame.sameOrigin())
-//                );
-//        return http.build();
-//    }
+    @Bean
+    @Order(0)
+    public SecurityFilterChain h2FilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher(PathRequest.toH2Console())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
+                );
+        return http.build();
+    }
 
     @Bean
     public SessionRegistry sessionRegistry() {
