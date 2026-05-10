@@ -26,4 +26,10 @@ public class HomeController {
     public String loginPage() {
         return "login";
     }
+
+    @GetMapping("/session-expired")
+    public String sessionExpired(Model model) {
+        model.addAttribute("msg","세션이 만료되었습니다. 다시 로그인 해주세요.");
+        return "session-expired";
+    }
 }
