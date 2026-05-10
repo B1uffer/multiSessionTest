@@ -11,9 +11,13 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, HttpSession session, Authentication auth) {
-        model.addAttribute("sessionId", session.getId()); // session Id
-        model.addAttribute("username", auth.getName()); // authentication name
+        // session 에서 id 가져옴
+        model.addAttribute("sessionId", session.getId());
+        // authentication 에서 name 가져옴
+        model.addAttribute("username", auth.getName());
+        // session 생성일자
         model.addAttribute("creationTime", session.getCreationTime());
+        // session 최근접속시간
         model.addAttribute("lastAccessedTime", session.getLastAccessedTime());
         return "home";
     }
