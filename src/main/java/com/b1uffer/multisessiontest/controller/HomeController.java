@@ -21,4 +21,9 @@ public class HomeController {
         model.addAttribute("lastAccessedTime", session.getLastAccessedTime());
         return "home";
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
 }
