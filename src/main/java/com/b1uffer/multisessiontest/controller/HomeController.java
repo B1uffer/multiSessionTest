@@ -1,12 +1,12 @@
 package com.b1uffer.multisessiontest.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Configuration
+@Controller
 public class HomeController {
 
     @GetMapping("/")
