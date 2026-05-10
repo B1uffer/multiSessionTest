@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="<http://www.thymeleaf.org>">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>홈</title>
 </head>
 <body>
-
+<h2>동시 세션 제어 실습 홈</h2>
+<ul>
+    <li>사용자: <span th:text="${username}"></span></li>
+    <li>세션 ID: <code th:text="${sessionId}"></code></li>
+    <li>생성 시각(ms): <span th:text="${creationTime}"></span></li>
+    <li>마지막 접근 시각(ms): <span th:text="${lastAccessedTime}"></span></li>
+</ul>
+<a href="/logout">로그아웃</a>
 </body>
 </html>
