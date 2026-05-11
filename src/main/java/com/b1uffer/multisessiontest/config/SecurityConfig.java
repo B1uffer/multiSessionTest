@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .sessionManagement(session -> session
+                        .sessionFixation(fixation -> fixation.migrateSession()) // 세션 고정 공격에 대한 보호
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
