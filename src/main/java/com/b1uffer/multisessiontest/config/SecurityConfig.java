@@ -50,12 +50,10 @@ public class SecurityConfig {
                         .rememberMeParameter("remember-me") // 로그인 폼에서 사용하는 파라미터명
                         .tokenValiditySeconds(7 * 24 * 60 * 60) // 쿠키 만료 시간
                         .userDetailsService(new InMemoryUsers().userDetailsService()) // 사용자 검증 서비스 추가
-
                         /**
                          * PersistentTokenBasedRememberMeServices, FilterChain 에 DataSource 주입이 필요함
                          */
 //                        .tokenRepository(persistentTokenRepository(dataSource))
-                        .userDetailsService(new InMemoryUsers().userDetailsService())
                 );
         return http.build();
     }
