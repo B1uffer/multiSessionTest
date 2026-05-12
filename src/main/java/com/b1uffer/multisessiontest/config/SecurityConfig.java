@@ -54,9 +54,9 @@ public class SecurityConfig {
                         /**
                          * PersistentTokenBasedRememberMeServices, FilterChain 에 DataSource 주입이 필요함
                          */
-                                .tokenRepository(persistentTokenRepository(dataSource))
-                                .tokenValiditySeconds(7 * 24 * 60 * 60)
-                                .userDetailsService(new InMemoryUsers().userDetailsService())
+                        .tokenRepository(persistentTokenRepository(dataSource))
+                        .tokenValiditySeconds(7 * 24 * 60 * 60)
+                        .userDetailsService(new InMemoryUsers().userDetailsService())
                 );
         return http.build();
     }
