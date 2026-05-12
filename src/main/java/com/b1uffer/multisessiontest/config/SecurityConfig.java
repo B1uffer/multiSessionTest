@@ -1,5 +1,6 @@
 package com.b1uffer.multisessiontest.config;
 
+import com.b1uffer.multisessiontest.support.InMemoryUsers;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +37,12 @@ public class SecurityConfig {
                         .maxSessionsPreventsLogin(false)
                         .expiredUrl("/session-expired")
                         .sessionRegistry(sessionRegistry())
+                )
+                .rememberMe(remember -> remember
+                        .key("my-remember-key") // 쿠키 생성 시 사용되는 고정 키
+                        .tokenValiditySeconds(7 * 24 * 60 * 60) // 쿠키 만료 시간
+                        .rememberMeParameter("remember-me") // 로그인 폼에서 사용하는 파라미터명
+                        .userDetailsService(new InMemoryUsers().userDetailsService()) // 사용자 검증 서비스 추가
                 );
         return http.build();
     }
