@@ -46,9 +46,9 @@ public class SecurityConfig {
                         * TokenBasedRememberMeServices, DataSource 주입이 필요하지 않음
                         */
                         .key("my-remember-key") // 쿠키 생성 시 사용되는 고정 키
-                        .rememberMeCookieName("my-remember-me")
-                        .tokenValiditySeconds(7 * 24 * 60 * 60) // 쿠키 만료 시간
+                        .rememberMeCookieName("my-remember-me") // 쿠키의 이름
                         .rememberMeParameter("remember-me") // 로그인 폼에서 사용하는 파라미터명
+                        .tokenValiditySeconds(7 * 24 * 60 * 60) // 쿠키 만료 시간
                         .userDetailsService(new InMemoryUsers().userDetailsService()) // 사용자 검증 서비스 추가
 
                         /**
