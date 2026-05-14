@@ -1,5 +1,6 @@
 package com.b1uffer.multisessiontest.config;
 
+import com.b1uffer.multisessiontest.custom.CustomUserDetailsService;
 import com.b1uffer.multisessiontest.support.InMemoryUsers;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
@@ -22,8 +25,9 @@ public class SecurityConfig {
     // 동시 세션 제어 핵심
     @Bean
     @Order(1)
-    public SecurityFilterChain sessionFilterChain(HttpSecurity http, DataSource dataSource) throws Exception {
+    public SecurityFilterChain sessionFilterChain(HttpSecurity http, DataSource dataSource, CustomUserDetailsService customUserDetailsService) throws Exception {
         http
+                .userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/session-expired", "/css/**").permitAll()
                         .anyRequest().authenticated()
@@ -49,7 +53,7 @@ public class SecurityConfig {
                         .rememberMeCookieName("my-remember-me") // 쿠키의 이름
                         .rememberMeParameter("remember-me") // 로그인 폼에서 사용하는 파라미터명
                         .tokenValiditySeconds(7 * 24 * 60 * 60) // 쿠키 만료 시간
-                        .userDetailsService(new InMemoryUsers().userDetailsService()) // 사용자 검증 서비스 추가
+                        .userDetailsService(customUserDetailsService) // 사용자 검증 서비스 추가
                         /**
                          * PersistentTokenBasedRememberMeServices, FilterChain 에 DataSource 주입이 필요함
                          */
@@ -87,5 +91,10 @@ public class SecurityConfig {
         JdbcTokenRepositoryImpl repository = new JdbcTokenRepositoryImpl();
         repository.setDataSource(datasource);
         return repository;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
