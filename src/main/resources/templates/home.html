@@ -12,6 +12,11 @@
     <li>생성 시각(ms): <span th:text="${creationTime}"></span></li>
     <li>마지막 접근 시각(ms): <span th:text="${lastAccessedTime}"></span></li>
 </ul>
-<a href="/logout">로그아웃</a>
+<form th:action="@{/logout}" method="post">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}" />
+    <button type="submit">로그아웃</button>
+</form>
 </body>
 </html>
