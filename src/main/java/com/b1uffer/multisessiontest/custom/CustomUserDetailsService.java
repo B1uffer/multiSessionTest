@@ -1,4 +1,4 @@
-package com.b1uffer.multisessiontest.service;
+package com.b1uffer.multisessiontest.custom;
 
 import com.b1uffer.multisessiontest.repository.UserRepository;
 import lombok.AllArgsConstructor;
