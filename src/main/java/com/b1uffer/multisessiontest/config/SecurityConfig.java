@@ -30,6 +30,9 @@ public class SecurityConfig {
                 .userDetailsService(customUserDetailsService)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/session-expired", "/css/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
