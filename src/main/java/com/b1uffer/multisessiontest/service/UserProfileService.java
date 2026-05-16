@@ -10,4 +10,9 @@ public class UserProfileService {
     public String getUserProfile(String username) {
         return "userProfile : " + username;
     }
+
+    @PreAuthorize("hasRole('ADMIN') and #id == authentication.principal.id")
+    public String editUser(Long id) {
+        return "edit User : " + id;
+    }
 }
