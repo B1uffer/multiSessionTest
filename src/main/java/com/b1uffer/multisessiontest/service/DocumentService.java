@@ -42,4 +42,14 @@ public class DocumentService {
         document.setContent(content);
         return documentRepository.save(document);
     }
+
+    @PreAuthorize("hasPermission(#document, 'write')")
+    public void editDocument(Document document) {
+        Document editDocument = documentRepository.findById(document.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Document not found"));
+
+        editDocument.setTitle(document.getTitle());
+        editDocument.setContent(document.getContent());
+        documentRepository.save(editDocument);
+    }
 }
