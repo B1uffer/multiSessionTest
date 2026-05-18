@@ -16,6 +16,7 @@ public class DocumentService {
 
     // 문서를 조회한 후 반환한다
     @PostAuthorize("returnObject.owner == authentication.name")
+//    @PreAuthorize("@documentPermissionEvaluator.isOwner(#id, authentication)")
     public Document getDocument(Long id) {
         return documentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Document not found"));
     }
