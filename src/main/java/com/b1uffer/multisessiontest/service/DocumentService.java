@@ -18,4 +18,8 @@ public class DocumentService {
     public Document getDocument(Long id) {
         return documentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Document not found"));
     }
+
+    public Document updateDocument(Document document) {
+
+    }
 }
