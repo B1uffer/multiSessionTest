@@ -6,6 +6,7 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 
 import java.io.Serializable;
+import java.util.NoSuchElementException;
 
 public class CustomPermissionEvaluator implements PermissionEvaluator {
     private final DocumentRepository repository;
@@ -33,7 +34,9 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
                                  String targetType,
                                  Object permission) {
         Long id = Long.valueOf(targetId.toString());
-        Document document = repository.findById(id).orElseThrow();
+        Document document = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("여기서 터져버림"));
+
         String username = authentication.getName();
         return document.getOwner().equals(username);
     }
