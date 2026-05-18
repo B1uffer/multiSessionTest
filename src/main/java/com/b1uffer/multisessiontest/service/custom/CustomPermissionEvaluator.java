@@ -32,7 +32,9 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
                                  Serializable targetId,
                                  String targetType,
                                  Object permission) {
-
-        return false;
+        Long id = Long.valueOf(targetId.toString());
+        Document document = repository.findById(id).orElseThrow();
+        String username = authentication.getName();
+        return document.getOwner().equals(username);
     }
 }
